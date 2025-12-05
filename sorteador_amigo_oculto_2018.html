@@ -1,0 +1,80 @@
+<html>
+	<head>
+		<script src="jquery.min.js"></script>
+		<script src="dadosParticipantes.js"></script>		
+	</head>
+	<body>
+		<form>
+                  <div id="divSorteioAcontecendo" style="display:block">
+		       Sorteio acontecendo...
+		 </div>
+		<div id="divSorteioRealizadoComSucesso" style="display:none">
+		   Sorteio Realizado com Sucesso!		  
+		<div>
+		
+		 </form>
+
+		<script>
+		    $( document ).ready(function() {
+ 			alert('Realizou sorteio');			
+         		$("#divSorteioAcontecendo").hide();
+			var resultadoSorteio = sortearAmigoOculto();
+			var fileName = "saidaSorteio.txt";
+			saveData(resultadoSorteio, fileName);
+            		$("#divSorteioRealizadoComSucesso").show();	
+			
+		      
+		    });
+
+			function sortearAmigoOculto() {	
+			    var i = null;
+			    var listaProvisioriaSorteio = "";
+			    var opcoesAmigoOculto = participantes.slice(0);	
+			    var resultado = [];	            
+			    for (i = 0; participantes.length > i; i += 1) {	
+				var participante = participantes[i];
+				var indiceRandomico = Math.floor(Math.random() * participantes.length);
+				var canditadoAmigoOculto = opcoesAmigoOculto[indiceRandomico];
+				if(canditadoAmigoOculto == null){
+			 		i -= 1;
+       			        }else if(canditadoAmigoOculto.nome.toUpperCase().trim() === participante.nome.toUpperCase().trim()){
+	  				i -= 1;
+				}else if(participante.amigoProibido != null && participante.amigoProibido.toUpperCase().trim() === canditadoAmigoOculto.nome.toUpperCase().trim()){
+					i -= 1;
+				}else{
+				   listaProvisioriaSorteio += "Participante: "+participante.nome + " -> Amigo oculto sorteado: " + canditadoAmigoOculto.nome + "\n";	
+				   opcoesAmigoOculto[indiceRandomico]=null;	
+					
+				   amigoSorteado = {};				
+				   amigoSorteado.nome=participante.nome;
+				   amigoSorteado.senha=participante.senha;
+				   amigoSorteado.amigoOculto=canditadoAmigoOculto.nome;
+				   resultado[i] = amigoSorteado;
+				}
+
+			    }		     
+			   //alert(listaProvisioriaSorteio);
+			   return resultado;
+			};
+
+			var saveData = (function () {
+			    var a = document.createElement("a");
+			    document.body.appendChild(a);
+			    a.style = "display: none";
+			    return function (data, fileName) {
+				var json = JSON.stringify(data),
+				    blob = new Blob([json], {type: "octet/stream"}),
+				    url = window.URL.createObjectURL(blob);
+				a.href = url;
+				a.download = fileName;
+				a.click();
+				window.URL.revokeObjectURL(url);
+			    };
+			}());
+		
+			
+			
+		</script>
+	</body>
+</html>
+
