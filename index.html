@@ -1,18 +1,105 @@
-<!doctype html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>App Amigo Oculto — Página Pública</title>
-  </head>
-  <body>
-    <main style="font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; max-width: 720px; margin: 4rem auto; padding: 0 1rem;">
-      <h1>App Amigo Oculto</h1>
-      <p>Esta é uma página estática pública para o repositório <strong>tonyharley/app_amigo_oculto</strong>.</p>
-      <p>Você pode editar <code>index.html</code> na branch <code>gh-pages</code> para atualizar esta página.</p>
-      <p>Mais informações no repositório no GitHub.</p>
-      <footer style="margin-top:2rem; color:#666; font-size:0.9rem;">Gerado automaticamente por GitHub Copilot. Data: 2025-12-05</footer>
-    </main>
-  </body>
-</html>
+<html>
+	<head>
+		<script src="jquery.min.js"></script>
+		<script src="data_final.js"></script>		
+		 <meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
+		<title>Amigo Oculto 2025</title>
+
+		<link rel="stylesheet" href="demo.css">
+		<link rel="stylesheet" href="form-login.css">
+	</head>
+	<body>
+		<form class="form-login">
+			<div class="form-log-in-with-email">
+		                <div class="form-white-background">
+					<h1 style="color:green;"> VERSAO DEFINITIVA! =)</h1>
+
+					<div class="form-row">
+						<label>
+						    <span>Nome</span>
+						    <input type="text" id="nome">
+						</label>
+					    </div>
+
+					    <div class="form-row">
+						<label>
+						    <span>Senha</span>
+						    <input type="text" id="senha">
+						</label>
+					    </div>
+
+					    <div class="form-row">
+						<button id="pesquisar" type="submit">Pesquisar</button>
+					    </div>
+
+					  <div class="form-row" id="divresultado" style="display:none">
+						<label>
+						 <span>Amigo Oculto Sorteado:</span>
+</label>
+						 <span id="amigoOcultoSorteado" style="font-weight:normal;"/>						
+					</div>
+					<div class="form-row" id="divmsgerro" style="display:none">
+						 <span id="msgerro" style="font-weight:normal;"/>						
+					</div>
+				</div>
+			</div>
+		
+		
+		 </form>
+
+		<script>
+		    $( document ).ready(function() {
+			
+			$("#pesquisar").click(function() {
+			 $("#divmsgerro").hide();
+			 $("#divresultado").hide();
+			 var nome = $("#nome").val();
+			 var senha = $("#senha").val();
+
+			if(nome == null || nome.trim()===""){
+			  $("#msgerro").html("Campo NOME obrigatorio.");
+			  $("#divmsgerro").show();
+				return false;
+			}
+
+			if(senha == null || senha.trim()===""){
+			  $("#msgerro").html("Campo SENHA obrigatorio.");
+			  $("#divmsgerro").show();
+				return false;
+			}
+
+			 var amigoOculto = pesquisarAmigoOculto(nome,senha);
+
+			if(amigoOculto == null){
+			   $("#msgerro").html("Usuario ou Senha invalidos.");
+			   $("#divmsgerro").show();
+			   return false;
+
+			}	
+			 $("#amigoOcultoSorteado").html(amigoOculto);
+			 $("#divresultado").show();
+			 return false;
+			});
+
+			function pesquisarAmigoOculto(nomeParticipante, senhaParticipante) {
+			    var i = null;
+			    for (i = 0; participantes.length > i; i += 1) {
+				if (participantes[i].nome.toUpperCase().trim() === nomeParticipante.toUpperCase().trim()&&
+					participantes[i].senha.toUpperCase().trim() === senhaParticipante.toUpperCase().trim()) {
+				    return participantes[i].amigoOculto;
+				}
+			    }
+			     
+			    return null;
+			
+
+			};
+		      
+		    });
+			
+		</script>
+	</body>
+</html>
