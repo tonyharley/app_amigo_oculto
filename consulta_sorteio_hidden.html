@@ -1,0 +1,43 @@
+<html>
+	<head>
+		<script src="jquery.min.js"></script>
+		<script src="data_final.js"></script>		
+		<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script> 
+		 <meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>Amigo Oculto 2018</title>
+
+		<link rel="stylesheet" href="demo.css">
+		<link rel="stylesheet" href="form-login.css">
+	</head>
+	<body>
+
+		<script>
+		    $( document ).ready(function() {
+			var dataSet = [];
+			    $.each(participantes, function(index,data){
+			      dataSet.push([data.nome,data.senha,data.amigoOculto]);
+			    });
+			
+			var table = $("#example").DataTable({
+				  data: dataSet,
+				  columns: [
+					 { title: 'nome' },
+					 { title: 'senha' },
+					 { title: 'amigoOculto' }
+				  ]
+			    });
+					      
+		    });
+			
+		</script>
+
+		<form >
+			<table id="example" class="display" width="100%"></table>		
+		
+		 </form>
+	</body>
+</html>
+
